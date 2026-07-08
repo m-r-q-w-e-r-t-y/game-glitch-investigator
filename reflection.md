@@ -4,9 +4,9 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 ## 1. What was broken when you started?
 
-- What did the game look like the first time you ran it?
-- List at least two concrete bugs you noticed at the start  
-  (for example: "the hints were backwards").
+The game looked playable at first glance — a number input, a submit button, and a hint message — but it quickly became clear the hints, the "New Game" button, and the attempt count were all broken, making the game frustrating or impossible to actually win.
+
+Two concrete bugs noticed right away: the "Go Higher/Go Lower" hints were backwards, and clicking "New Game" didn't actually reset the game (the page had to be refreshed instead).
 
 **Bug Reproduction Log**
 
@@ -14,9 +14,10 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
+| Secret is 90; guess 80 | "Go Higher" (80 is below 90) | Shows "Go Lower" | None — silent logic bug in `check_guess` |
+| Secret is 90; guess 100 | "Go Lower" (100 is above 90) | Shows "Go Higher" | None — silent logic bug in `check_guess` |
+| Click "New Game" after a round ends | A fresh secret number and reset attempts/status so play can continue | Attempts/secret reset internally, but the game still shows "Game over" / "You already won" and won't accept guesses; page refresh is required | None — silent state bug (`status` not reset) |
+| Difficulty set to allow 7 attempts, then play a full round | Player gets 7 guesses before losing | Game ends after 6 guesses | None — off-by-one in the attempts counter |
 
 ---
 
