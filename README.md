@@ -31,27 +31,40 @@ It wrote the code, ran away, and now the game is unplayable.
    1. Bug 1: "Go Lower" / "Go Higher" is flipped. Suppose the secret is 90, submitting 80 yields "Go Lower" and submitting 100 yields "Go Higher". It should be the opposite.
    2. Bug 2: Clicking "New Game" does not start a new game. To play again, you need for refresh the page.
    3. Bug 3: The player gets 1 less attempt then expected. For example, given 7 attempts, the system only allows 6. 
-- [ ] Explain what fixes you applied.
-   1. Bugs 1-3 are fixed.
+- [x] Explain what fixes you applied.
+   1. **Bug 1 (hints reversed):** Added `get_hint_message()` in `logic_utils.py` with the correct outcome-to-message mapping, so "Too High" now says "Go LOWER" and "Too Low" now says "Go HIGHER".
+   2. **Bug 2 (New Game didn't reset):** The "New Game" button in `app.py` now resets `status`, `score`, and `history` in addition to `attempts` and `secret`, and regenerates the secret using the selected difficulty's range instead of a hardcoded 1-100.
+   3. **Bug 3 (off-by-one attempts):** `st.session_state.attempts` now initializes to `0` instead of `1`, so "attempts left" and the scoring formula in `update_score()` line up with the actual number of guesses made.
 
 ## 📸 Demo Walkthrough
 
-Describe your fixed game in numbered steps so a reader can follow along without watching a video:
-
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Difficulty is set to "Normal" (secret is between 1 and 100).
+2. User enters a guess of 40 → hint shows "📈 Go HIGHER!"
+3. User enters a guess of 70 → hint shows "📉 Go LOWER!"
+4. Score updates after each guess (points deducted for missed guesses).
+5. User enters the correct number → "🎉 Correct!" is shown, balloons appear, and the game reports the final score.
+6. Clicking "New Game 🔁" immediately starts a fresh round with a new secret, a reset score, and full attempts restored (previously this required a manual page refresh).
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 
 ## 🧪 Test Results
 
 ```
-# Paste your pytest output here, e.g.:
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
+$ python -m pytest tests/ -v
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.4.2, pluggy-1.6.0
+rootdir: .../ai110-module1show-gameglitchinvestigator-starter-main
+collected 7 items
+
+tests/test_game_logic.py::test_winning_guess PASSED                      [ 14%]
+tests/test_game_logic.py::test_guess_too_high PASSED                     [ 28%]
+tests/test_game_logic.py::test_guess_too_low PASSED                      [ 42%]
+tests/test_game_logic.py::test_hint_message_not_reversed_when_too_high PASSED [ 57%]
+tests/test_game_logic.py::test_hint_message_not_reversed_when_too_low PASSED [ 71%]
+tests/test_game_logic.py::test_attempt_count_not_off_by_one PASSED       [ 85%]
+tests/test_game_logic.py::test_get_range_for_difficulty_matches_selected_difficulty PASSED [100%]
+
+============================== 7 passed in 0.01s ===============================
 ```
 
 ## 🚀 Stretch Features
