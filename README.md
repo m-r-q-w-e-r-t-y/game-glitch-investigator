@@ -25,9 +25,9 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
+- [x] Describe the game's purpose.
    - The purpose of the game is to guess a number from 1-100 that the code has randomly picked.
-- [ ] Detail which bugs you found.
+- [x] Detail which bugs you found.
    1. Bug 1: "Go Lower" / "Go Higher" is flipped. Suppose the secret is 90, submitting 80 yields "Go Lower" and submitting 100 yields "Go Higher". It should be the opposite.
    2. Bug 2: Clicking "New Game" does not start a new game. To play again, you need for refresh the page.
    3. Bug 3: The player gets 1 less attempt then expected. For example, given 7 attempts, the system only allows 6. 
@@ -50,21 +50,13 @@ It wrote the code, ran away, and now the game is unplayable.
 ## 🧪 Test Results
 
 ```
-$ python -m pytest tests/ -v
-============================= test session starts ==============================
-platform linux -- Python 3.10.12, pytest-8.4.2, pluggy-1.6.0
-rootdir: .../ai110-module1show-gameglitchinvestigator-starter-main
-collected 7 items
-
-tests/test_game_logic.py::test_winning_guess PASSED                      [ 14%]
-tests/test_game_logic.py::test_guess_too_high PASSED                     [ 28%]
-tests/test_game_logic.py::test_guess_too_low PASSED                      [ 42%]
-tests/test_game_logic.py::test_hint_message_not_reversed_when_too_high PASSED [ 57%]
-tests/test_game_logic.py::test_hint_message_not_reversed_when_too_low PASSED [ 71%]
-tests/test_game_logic.py::test_attempt_count_not_off_by_one PASSED       [ 85%]
-tests/test_game_logic.py::test_get_range_for_difficulty_matches_selected_difficulty PASSED [100%]
-
-============================== 7 passed in 0.01s ===============================
+(.venv) ➜  ai110-module1show-gameglitchinvestigator-starter-main git:(main) python -m pytest tests/
+========================================================== test session starts ===========================================================
+platform darwin -- Python 3.9.6, pytest-8.4.2, pluggy-1.6.0
+rootdir: /Users/macbookair/Documents/CodePath/ai110-module1show-gameglitchinvestigator-starter-main
+collected 7 items                                                                                                                        
+tests/test_game_logic.py .......                                                                                                   [100%]
+=========================================================== 7 passed in 0.01s ============================================================
 ```
 
 ## 🚀 Stretch Features
